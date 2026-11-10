@@ -1,0 +1,15 @@
+# Deploy stage: point kubectl at the EKS cluster, Helm-upgrade the chart.
+# Runs as the CodeBuild deploy role, which is granted cluster access via an
+# EKS access entry (AmazonEKSClusterAdminPolicy) - no aws-auth editing.
+version: 0.2
+phases:
+  install:
+    commands:
+      - curl -sL https://get.helm.sh/helm-v3.16.3-linux-amd64.tar.gz | tar xz -C /tmp
+      - mv /tmp/linux-amd64/helm /usr/local/bin/helm
+      - aws eks update-kubeconfig --name aws-eks-demo --region ap-south-1
+  build:
+    commands:
+      - helm upgrade --install demo charts/demo --namespace default
+      - kubectl rollout status deployment/frontend --timeout=180s
+      - kubectl rollout status deployment/backend --timeout=180s
