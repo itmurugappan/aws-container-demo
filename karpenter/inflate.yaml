@@ -1,0 +1,16 @@
+# Karpenter proof: a pod too big for free space on managed nodes.
+# Karpenter sees it Pending, launches a right-sized node (~60s), pod lands.
+# Delete it -> node empties -> consolidation removes the node.
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: inflate}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: inflate}}
+  template:
+    metadata: {labels: {app: inflate}}
+    spec:
+      containers:
+      - name: inflate
+        image: public.ecr.aws/eks-distro-build-tooling/pause:3.2
+        resources: {requests: {cpu: "1.5", memory: "2Gi"}}

@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: demo-dev
+resources: [../../base]
+namePrefix: dev-
+replicas:
+- {name: frontend, count: 2}
+- {name: backend, count: 2}
+# Patch = Kustomize way: no templates, just override fields of the base
+patches:
+- target: {kind: Deployment, name: frontend}
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/env/0/value
+      value: DEV
+- target: {kind: Deployment, name: backend}
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/env/0/value
+      value: DEV
