@@ -1,0 +1,17 @@
+# Frontend v2 for the Istio canary: same image, APP_VERSION=2, label version=v2.
+# DestinationRule subsets (v1/v2) select on the version label; VirtualService splits 80/20.
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: frontend-v2, labels: {app: frontend, version: v2}}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: frontend, version: v2}}
+  template:
+    metadata: {labels: {app: frontend, version: v2}}
+    spec:
+      containers:
+      - name: frontend
+        image: 150043945349.dkr.ecr.ap-south-1.amazonaws.com/demo-frontend:latest
+        ports: [{containerPort: 8080}]
+        env: [{name: APP_ENV, value: DEV}, {name: APP_VERSION, value: "2"}, {name: BACKEND_URL, value: "http://backend:8080"}]
+        readinessProbe: {httpGet: {path: /health, port: 8080}}
