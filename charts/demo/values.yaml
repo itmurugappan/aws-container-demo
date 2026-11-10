@@ -1,0 +1,12 @@
+env: DEV
+frontend:
+  image: {repository: FRONTEND_ECR_URI, tag: latest}
+  replicas: 2
+  port: 8080
+backend:
+  image: {repository: BACKEND_ECR_URI, tag: latest}
+  replicas: 2
+  port: 8080
+istio:
+  enabled: true
+  canaryWeight: 20

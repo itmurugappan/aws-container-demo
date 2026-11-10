@@ -1,0 +1,1 @@
+EKS: Cluster aws-eks-demo in ap-south-1, managed node group t3.small x2 (or Fargate profiles). Install: aws-ebs, ALB controller, then Istio: istioctl install --set profile=demo -y; kubectl label namespace default istio-injection=enabled. Deploy: helm upgrade --install demo ./charts/demo. Expose via Istio ingressgateway.
