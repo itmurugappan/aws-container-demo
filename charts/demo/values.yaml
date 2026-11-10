@@ -1,10 +1,10 @@
 env: DEV
 frontend:
-  image: {repository: FRONTEND_ECR_URI, tag: latest}
+  image: {repository: 150043945349.dkr.ecr.ap-south-1.amazonaws.com/demo-frontend, tag: latest}
   replicas: 2
   port: 8080
 backend:
-  image: {repository: BACKEND_ECR_URI, tag: latest}
+  image: {repository: 150043945349.dkr.ecr.ap-south-1.amazonaws.com/demo-backend, tag: latest}
   replicas: 2
   port: 8080
 istio:

@@ -12,6 +12,9 @@ patches:
     - op: replace
       path: /spec/template/spec/containers/0/env/0/value
       value: PROD
+    - op: replace
+      path: /spec/template/spec/containers/0/env/2/value
+      value: http://prod-backend:8080
 - target: {kind: Deployment, name: backend}
   patch: |-
     - op: replace

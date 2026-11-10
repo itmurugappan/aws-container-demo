@@ -6,13 +6,15 @@ namePrefix: dev-
 replicas:
 - {name: frontend, count: 2}
 - {name: backend, count: 2}
-# Patch = Kustomize way: no templates, just override fields of the base
 patches:
 - target: {kind: Deployment, name: frontend}
   patch: |-
     - op: replace
       path: /spec/template/spec/containers/0/env/0/value
       value: DEV
+    - op: replace
+      path: /spec/template/spec/containers/0/env/2/value
+      value: http://dev-backend:8080
 - target: {kind: Deployment, name: backend}
   patch: |-
     - op: replace
