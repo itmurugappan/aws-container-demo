@@ -13,7 +13,7 @@ def home():
         backend = {"status": "unreachable", "error": str(e)}
     return f"""<html><title>Container Demo - {ENV}</title>
 <body style='font-family:sans-serif'>
-<h1>AWS Container Demo</h1>
+<h1>AWS Container Demo - via CodePipeline</h1>
 <h2>Frontend - {ENV} - Version {VERSION}</h2>
 <p>Frontend -> Backend call via service discovery / Istio mesh</p>
 <pre>{backend}</pre>
